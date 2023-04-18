@@ -2,8 +2,8 @@ import json
 
 REQUEST = 2
 
-path_in = "./data/data4.json"
-path_out = "./data/data4_copy.json"
+path_in = "./data/data7.json"
+path_out = "./data/data7_copy.json"
 
 
 WRITE = True
