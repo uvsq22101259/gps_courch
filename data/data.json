@@ -1141,7 +1141,7 @@
     },
     {
       "name": "CHAPELETS",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas Chapelets",
       "noeud_fin": "haut Chapelets",
       "longueur": 511,
@@ -1924,7 +1924,7 @@
     },
     {
       "name": "CHANROSSA",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "CREUX",
       "noeud_fin": "COL DE CHANROSSA",
       "longueur": 647,
@@ -1941,7 +1941,7 @@
     },
     {
       "name": "ROC MERLET",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas Roc merlet",
       "noeud_fin": "COL DE CHANROSSA",
       "longueur": 236,
@@ -1958,7 +1958,7 @@
     },
     {
       "name": "PYRAMIDES",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas Pyramides",
       "noeud_fin": "haut Pyramides",
       "longueur": 470,
@@ -1975,7 +1975,7 @@
     },
     {
       "name": "GRANGES",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "n29",
       "noeud_fin": "haut Granges",
       "longueur": 286,
@@ -1996,7 +1996,7 @@
     },
     {
       "name": "SIGNAL",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas Signal",
       "noeud_fin": "haut SIGNAL",
       "longueur": 663,
@@ -2844,7 +2844,7 @@
     },
     {
       "name": "BELVEDERE",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas Belv\u00e9d\u00e8re",
       "noeud_fin": "haut Belv\u00e9d\u00e8re",
       "longueur": 401,
@@ -2949,7 +2949,7 @@
     },
     {
       "name": "PTE BOSSE",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas Signal",
       "noeud_fin": "n51",
       "longueur": 166,
@@ -3135,7 +3135,7 @@
     },
     {
       "name": "PETIT MORIOND",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas PETIT MORIOND",
       "noeud_fin": "haut PETIT MORIOND",
       "longueur": 95,
@@ -3173,7 +3173,7 @@
     },
     {
       "name": "ARIONDAZ",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas Ariondaz",
       "noeud_fin": "BEL AIR",
       "longueur": 823,
@@ -4488,7 +4488,7 @@
     },
     {
       "name": "aiguille du fruit",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "PRAMERUEL",
       "noeud_fin": "haut AIGUILLE DU FRUIT",
       "longueur": 479,
@@ -4505,7 +4505,7 @@
     },
     {
       "name": "roc mugnier",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "PRAMERUEL",
       "noeud_fin": "haut Roc mugnier",
       "longueur": 535,
@@ -4522,7 +4522,7 @@
     },
     {
       "name": "suisses",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas SUISSES",
       "noeud_fin": "VIZELLE",
       "longueur": 612,
@@ -4539,7 +4539,7 @@
     },
     {
       "name": "marmottes",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "CREUX",
       "noeud_fin": "VIZELLE",
       "longueur": 725,
@@ -4556,7 +4556,7 @@
     },
     {
       "name": "altiport",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "n97",
       "noeud_fin": "n96",
       "longueur": 199,
@@ -4639,7 +4639,7 @@
     },
     {
       "name": "creux noirs",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas CREUX NOIRS",
       "noeud_fin": "haut CREUX NOIRS",
       "longueur": 538,
@@ -5049,7 +5049,7 @@
     },
     {
       "name": "Vizeille",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "verdons",
       "noeud_fin": "VIZELLE",
       "longueur": 600,
@@ -5070,7 +5070,7 @@
     },
     {
       "name": "saulire",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "verdons",
       "noeud_fin": "haut SAULIRE",
       "longueur": 623,
@@ -5628,7 +5628,7 @@
     },
     {
       "name": "cospillot",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "n130",
       "noeud_fin": "haut COSPILLOT",
       "longueur": 308,
@@ -5653,7 +5653,7 @@
     },
     {
       "name": "pralong",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "haut COSPILLOT",
       "noeud_fin": "biollay",
       "longueur": 466,
@@ -5741,7 +5741,7 @@
     },
     {
       "name": "roys",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas roys",
       "noeud_fin": "haut roys",
       "longueur": 97,
@@ -5988,7 +5988,7 @@
     },
     {
       "name": "tovets ",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "courchevel- village",
       "noeud_fin": "bas VERDONS",
       "longueur": 331,
@@ -6005,7 +6005,7 @@
     },
     {
       "name": "grangettes",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "courchevel-village",
       "noeud_fin": "bas VERDONS",
       "longueur": 341,
@@ -6047,7 +6047,7 @@
     },
     {
       "name": "verdons ",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas VERDONS",
       "noeud_fin": "verdons",
       "longueur": 533,
@@ -6076,7 +6076,7 @@
     },
     {
       "name": "biollay",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas COQS",
       "noeud_fin": "biollay",
       "longueur": 515,
@@ -6109,7 +6109,7 @@
     },
     {
       "name": "sources",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas SOURCES / ROCHER DE L'OMBRE",
       "noeud_fin": "haut SOURCES / ROCHER DE L'OMBRE",
       "longueur": 285,
@@ -6126,7 +6126,7 @@
     },
     {
       "name": "rocher de l'ombre",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas SOURCES / ROCHER DE L'OMBRE",
       "noeud_fin": "n75",
       "longueur": 414,
@@ -6172,7 +6172,7 @@
     },
     {
       "name": "jardin alpin",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas JARDIN ALPIN",
       "noeud_fin": "n101",
       "longueur": 444,
@@ -6205,7 +6205,7 @@
     },
     {
       "name": "Bellecote",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas BELLECOTE",
       "noeud_fin": "n102",
       "longueur": 364,
@@ -8632,7 +8632,7 @@
     },
     {
       "name": "praz",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "corchevel -le praz",
       "noeud_fin": "n165",
       "longueur": 745,
@@ -8657,7 +8657,7 @@
     },
     {
       "name": "epicea",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "plantery",
       "noeud_fin": "haut epicea",
       "longueur": 303,
@@ -8678,7 +8678,7 @@
     },
     {
       "name": "Plantery",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "plantery",
       "noeud_fin": "lozes",
       "longueur": 540,
@@ -8699,7 +8699,7 @@
     },
     {
       "name": "LOZES",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas LOZE",
       "noeud_fin": "lozes",
       "longueur": 510,
@@ -8716,7 +8716,7 @@
     },
     {
       "name": "CHENUS",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas VERDONS",
       "noeud_fin": "chenus",
       "longueur": 604,
@@ -8733,7 +8733,7 @@
     },
     {
       "name": "COQS",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas COQS",
       "noeud_fin": "chenus",
       "longueur": 509,
@@ -8750,7 +8750,7 @@
     },
     {
       "name": "DOU des lanches",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "n150",
       "noeud_fin": "col de la loze",
       "longueur": 404,
@@ -8767,7 +8767,7 @@
     },
     {
       "name": "foret",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "corchevel -le praz",
       "noeud_fin": "n148",
       "longueur": 629,
@@ -8784,7 +8784,7 @@
     },
     {
       "name": "STADE",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas stade",
       "noeud_fin": "n150",
       "longueur": 303,
@@ -8801,7 +8801,7 @@
     },
     {
       "name": "Bouc Blanc",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "bas stade",
       "noeud_fin": "n142",
       "longueur": 786,
@@ -8818,7 +8818,7 @@
     },
     {
       "name": "Gros murger",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "la tania",
       "noeud_fin": "n172",
       "longueur": 528,
@@ -8835,7 +8835,7 @@
     },
     {
       "name": "LA tania",
-      "couleur": "yellow",
+      "couleur": "grey",
       "noeud_depart": "la tania",
       "noeud_fin": "n162",
       "longueur": 772,

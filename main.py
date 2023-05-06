@@ -1,11 +1,12 @@
 import json
 import heapq
 
+
 file = json.load(open("data\data_final.json","r"))
 
 
 class Noeuds ():
-    def __init__(self, nom, ) -> None:
+    def __init__(self, nom ) -> None:
         self.nom = nom
         self.voisins = list()
 
