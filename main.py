@@ -1,43 +1,68 @@
 import json
 import heapq
 
-class Graph:
-    def __init__(self, graph):
-        self.graph = graph
-        self.nodes = set(graph.keys())
 
-    def get_shortest_path(self, start_node, end_node):
-        distances = {node: float('inf') for node in self.nodes}
-        distances[start_node] = 0
 
-        heap = [(0, start_node)]
-        while heap:
-            (current_distance, current_node) = heapq.heappop(heap)
-            if current_node == end_node:
-                path = []
-                while current_node is not None:
-                    path.append(current_node)
-                    current_node = distances[current_node][1]
-                return path[::-1]
+file = json.load(open("data\data_final.json","r"))
 
-            for neighbor, weight in self.graph[current_node].items():
-                distance = current_distance + weight
-                if distance < distances[neighbor]:
-                    distances[neighbor] = (distance, current_node)
-                    heapq.heappush(heap, (distance, neighbor))
 
+
+class Noeuds ():
+    def __init__(self, nom, voisins = []) -> None:
+        self.nom = nom
+
+    def __repr__(self) -> str:
+        return self.nom
+
+class Pistes():
+    def __init__(self,nom, couleur, noeud_d, noeud_f, longueur) -> None:
+        self.nom = nom
+        self.couleur = couleur
+        self.depart = noeud_d
+        self.fin = noeud_f
+        self.longueur = longueur
+    
+    def __repr__(self) -> str:
+        return self.nom
+    
+class Data():
+    def __init__(self, noeuds, pistes) -> None:
+        self.noeuds = noeuds
+        self.pistes = pistes
+
+
+    def djikstra(self, a, b):
+        pass
+
+    def get_piste(self, a, b):
+        for piste in self.pistes:
+            if piste.depart == a and piste.fin == b:
+                return piste
         return None
+    
+    def voisin(self, noeud):
+        voisins = []
+        for piste in self.pistes:
+            if piste.depart == noeud:
+                voisins.append(piste.fin)
+        return voisins
 
-with open('data/data11.json', 'r') as f:
-    data = json.load(f)
 
-graph = Graph(data)
 
-start_node = input("Entrez le nœud de départ: ")
-end_node = input("Entrez le nœud de fin: ")
 
-shortest_path = graph.get_shortest_path(start_node, end_node)
-if shortest_path:
-    print("Le chemin le plus court est: ", "->".join(shortest_path))
-else:
-    print("Il n'y a pas de chemin possible entre ces deux nœuds.")
+liste_noeuds = []
+for elem in file["noeuds"]:
+    liste_noeuds.append(Noeuds(elem["name"]))
+
+liste_pistes = []
+for elem in file["pistes"]:
+    liste_pistes.append(Pistes(elem["name"], elem["couleur"], elem["noeud_depart"], elem["noeud_fin"], elem["longueur"]))
+    
+data = Data(liste_noeuds, liste_pistes)
+
+for noeuds in data.noeuds:
+    print(data.voisin(noeuds.nom), noeuds.nom)
+   
+   
+
+data.djikstra("CREUX", "haut Pyramides")
