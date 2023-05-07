@@ -3,6 +3,7 @@ from tkinter import filedialog
 from PIL import ImageTk, Image
 from tkinter.filedialog import askopenfilename
 import json
+import heapq
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -36,7 +37,7 @@ class Application(tk.Frame):
         # Ajouter les noeuds sur le canvas
         for noeud in liste_noeuds:
             x, y = noeud.coord
-            noeud_obj = self.canvas.create_oval(x-10, y-10, x+10, y+10, fill="red", outline="white", width=2, tags="noeud")
+            noeud_obj = self.canvas.create_oval(x-10, y-10, x+10, y+10, fill="red", outline="red", width=2, tags="noeud")
             self.noeuds.append(noeud)
             noeud.point = noeud_obj
 
@@ -51,24 +52,22 @@ class Application(tk.Frame):
         # Ajouter les chemins sur le canvas
         self.canvas.bind("<Button-1>", self.clic_droit)
 
-    def get_noeud(self, x, y):
+    def find_noeud(self, x, y):
         """ retourne le noeud sur lequel on a cliqué, ou None si on n'a pas cliqué sur un noeud"""
         for noeud in self.noeuds:
-            print(noeud.nom)
             x1,y1,x2,y2= self.canvas.coords(noeud.point)
             if x1  < x <  x2 and y1  < y < y2:
-                
-                self.chemins.append(noeud)
                 return noeud
         return None
+
 
     def clic_droit(self,event):
         """ gère le clic droit de la souris: si on a cliqué sur un noeud, on l'ajoute à la liste des chemins, sinon on affiche un message d'erreur"""
         if len(self.chemins) % 2 == 1 or len(self.chemins) == 0:
             x, y = event.x + self.image.width*self.x_scrollbar.get()[0], event.y + self.image.height*self.y_scrollbar.get()[0]
-            noeud = self.get_noeud(x, y)
+            noeud = self.find_noeud(x, y)
             if noeud is not None:
-                print(noeud.nom)
+                self.chemins.append(noeud)
             else:
                 print("Aucun noeud trouvé")
         if len(self.chemins) % 2 == 0 and len(self.chemins) != 0:
@@ -79,12 +78,64 @@ class Application(tk.Frame):
     
         a = self.chemins[0]
         b = self.chemins[1]
-       
-        self.canvas.itemconfig(a.point, fill="yellow", outline="yellow", width=4); self.canvas.itemconfig(b.point, fill="yellow", outline="yellow", width=4)
-        Pistes = data.get_piste(a,b)
-        self.canvas.itemconfig(Pistes.segment, fill="yellow", width=4)
+        self.dijkstra(a,b)
+        
+     
 
-        print("Trajet de {} à {}".format(self.chemins[0].nom, self.chemins[1].nom))
+
+
+
+
+    def dijkstra(self, depart, arrivee):
+        """Calcule le plus court chemin entre deux noeuds avec l'algorithme de Dijkstra"""
+
+        # Initialisation
+        if depart == arrivee:
+            return "vous êtes déjà sur place"
+        
+        for noeud in self.noeuds:
+            noeud.distance = float("inf")
+            noeud.precedent = None
+        
+        for vois in depart.voisins:
+            longueur = data.get_piste(depart, vois).longueur
+            vois.distance = longueur
+            vois.precedent = depart
+
+        depart.distance = 0
+        file = []
+        
+        # Boucle principale
+        while True:
+            self.noeuds.sort(key = lambda x: x.distance)
+            noeud = self.noeuds.pop(0)
+            file.append(noeud)
+            if noeud == arrivee:
+                print("Arrivée", noeud.precedent)
+                break
+            for vois in noeud.voisins:
+                    
+                    longueur = data.get_piste(noeud, vois).longueur
+                    
+                    if noeud.distance + longueur < vois.distance:
+                        vois.distance = noeud.distance + longueur
+                        vois.precedent = noeud
+                        
+
+        # Affichage du chemin
+        noeud = arrivee
+
+        while noeud.precedent is not None:
+            
+            self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
+            piste = data.get_piste(noeud.precedent, noeud)
+            
+            self.canvas.itemconfig(piste.segment, fill="yellow", width=4 )
+            print(piste.nom, piste.longueur)
+            noeud = noeud.precedent
+        self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
+        for noeud in file:
+            self.noeuds.append(noeud)
         self.chemins = []
         
 
@@ -126,6 +177,8 @@ class Data():
         for piste in self.pistes:
             piste.depart = self.get_noeud(piste.depart)
             piste.fin = self.get_noeud(piste.fin)
+        for noeud in self.noeuds:
+            self.voisin(noeud)
 
     
     def get_noeud(self, nom):
@@ -134,12 +187,9 @@ class Data():
                 return noeud
         return None
 
-    def djikstra(self, a, b):
-
-        pass
 
     def get_piste(self, a, b):
-        
+
         for piste in self.pistes:
             if piste.depart == a and piste.fin == b:
                 return piste
