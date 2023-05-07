@@ -22,6 +22,8 @@ class Application(tk.Frame):
         self.y_scrollbar = tk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.canvas.yview, width= 40)
         self.y_scrollbar.grid(row=0, column=1, sticky=tk.N+tk.S)
         self.canvas.config(xscrollcommand=self.x_scrollbar.set, yscrollcommand=self.y_scrollbar.set)
+        
+    
 
         # Configurer le système de grille
         self.root.columnconfigure(0, weight=1)
@@ -29,12 +31,14 @@ class Application(tk.Frame):
 
         self.noeuds = []
         self.pistes = []
+        self.chemins = []
 
         # Ajouter les noeuds sur le canvas
         for noeud in liste_noeuds:
             x, y = noeud.coord
             noeud_obj = self.canvas.create_oval(x-10, y-10, x+10, y+10, fill="red", outline="white", width=2, tags="noeud")
-            self.noeuds.append((noeud.nom, x, y, noeud_obj))
+            self.noeuds.append(noeud)
+            noeud.point = noeud_obj
 
         # Ajouter les pistes sur le canvas
         for piste in liste_pistes:
@@ -42,7 +46,47 @@ class Application(tk.Frame):
             x2, y2 = data.get_noeud(piste.fin.nom).coord
             piste_obj = self.canvas.create_line(x1, y1, x2, y2, fill=piste.couleur, width=5, tags="piste")
             self.pistes.append((piste.nom, piste_obj))
+            piste.segment = piste_obj
 
+        # Ajouter les chemins sur le canvas
+        self.canvas.bind("<Button-1>", self.clic_droit)
+
+    def get_noeud(self, x, y):
+        for noeud in self.noeuds:
+            print(noeud.nom)
+            x1,y1,x2,y2= self.canvas.coords(noeud.point)
+            if x1  < x <  x2 and y1  < y < y2:
+                
+                self.chemins.append(noeud)
+                return noeud
+        return None
+
+    def clic_droit(self,event):
+        if len(self.chemins) % 2 == 1 or len(self.chemins) == 0:
+            x, y = event.x + self.image.width*self.x_scrollbar.get()[0], event.y + self.image.height*self.y_scrollbar.get()[0]
+            noeud = self.get_noeud(x, y)
+            if noeud is not None:
+                print(noeud.nom)
+            else:
+                print("Aucun noeud trouvé")
+        if len(self.chemins) % 2 == 0 and len(self.chemins) != 0:
+            self.trajet()
+
+    def trajet(self,):
+    
+        a = self.chemins[0]
+        b = self.chemins[1]
+       
+        self.canvas.itemconfig(a.point, fill="yellow", outline="yellow", width=4); self.canvas.itemconfig(b.point, fill="yellow", outline="yellow", width=4)
+        Pistes = data.get_piste(a,b)
+        self.canvas.itemconfig(Pistes.segment, fill="yellow", width=4)
+
+        print("Trajet de {} à {}".format(self.chemins[0].nom, self.chemins[1].nom))
+        self.chemins = []
+        
+
+        
+       
         
 
     
@@ -51,22 +95,24 @@ file = json.load(open("data\data.json","r"))
 
 
 class Noeuds ():
-    def __init__(self, nom,coord ) -> None:
+    def __init__(self, nom,coord, point = None ) -> None:
         self.nom = nom
         self.voisins = list()
         self.coord = coord
+        self.point = point
 
     def __repr__(self) -> str:
         return self.nom
 
 class Pistes():
-    def __init__(self,nom, couleur, noeud_d, noeud_f, longueur, coords) -> None:
+    def __init__(self,nom, couleur, noeud_d, noeud_f, longueur, coords, segment = None) -> None:
         self.nom = nom
         self.couleur = couleur
         self.depart = noeud_d
         self.fin = noeud_f
         self.longueur = longueur
-    
+        self.coords = coords
+        self.segment = segment
     def __repr__(self) -> str:
         return self.nom
     
