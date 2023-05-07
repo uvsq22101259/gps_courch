@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image
+from tkinter.messagebox import askquestion
 from tkinter.filedialog import askopenfilename
 import json
 import heapq
@@ -8,6 +9,7 @@ import heapq
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        self.niveau = "débutant"
         self.root = root
         self.root.geometry("1500x1080")
         self.root.title("Createur de graph")
@@ -23,8 +25,16 @@ class Application(tk.Frame):
         self.y_scrollbar = tk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.canvas.yview, width= 40)
         self.y_scrollbar.grid(row=0, column=1, sticky=tk.N+tk.S)
         self.canvas.config(xscrollcommand=self.x_scrollbar.set, yscrollcommand=self.y_scrollbar.set)
+        menu_bar = tk.Menu(self.root)
+        self.root.config(menu=menu_bar)
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        file_menu.add_command(label="débutant", command= self.debutant)
+        file_menu.add_command(label="confirmer", command= self.confimer)
         
-    
+        
+        menu_bar.add_cascade(label="niveau", menu=file_menu)
+        menu_bar.add_command(label="Exit", command=self.root.quit)
+        menu_bar.add_command(label="reset", command=self.reset)
 
         # Configurer le système de grille
         self.root.columnconfigure(0, weight=1)
@@ -37,7 +47,7 @@ class Application(tk.Frame):
         # Ajouter les noeuds sur le canvas
         for noeud in liste_noeuds:
             x, y = noeud.coord
-            noeud_obj = self.canvas.create_oval(x-10, y-10, x+10, y+10, fill="red", outline="red", width=2, tags="noeud")
+            noeud_obj = self.canvas.create_oval(x-10, y-10, x+10, y+10, fill="orange", outline="black", width=2, tags="noeud")
             self.noeuds.append(noeud)
             noeud.point = noeud_obj
 
@@ -48,11 +58,26 @@ class Application(tk.Frame):
                 xi, yi = piste.coords[i]
                 xi1, yi1 = piste.coords[i+1]
                 piste_obj.append(self.canvas.create_line(xi, yi, xi1, yi1, fill=piste.couleur, width=5, tags= piste.nom))
-            self.pistes.append((piste.nom, piste_obj))
+            self.pistes.append(piste)
             piste.segment = piste_obj
 
         # Ajouter les chemins sur le canvas
         self.canvas.bind("<Button-1>", self.clic_droit)
+    
+
+
+    def confimer(self):
+        data.niveau = "confirmé"
+        vitesse = {"green": 55, "blue": 60, "red": 100, "black": 130, "grey" : 1}
+        for piste in self.pistes:
+            piste.longueur /= vitesse[piste.couleur]
+
+    def debutant(self):
+        data.niveau = "débutant"
+        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 1}
+        for piste in self.pistes:
+            piste.longueur /= vitesse[piste.couleur]
+        
 
     def find_noeud(self, x, y):
         """ retourne le noeud sur lequel on a cliqué, ou None si on n'a pas cliqué sur un noeud"""
@@ -91,6 +116,7 @@ class Application(tk.Frame):
     def dijkstra(self, depart, arrivee):
         """Calcule le plus court chemin entre deux noeuds avec l'algorithme de Dijkstra"""
 
+
         # Initialisation
         if depart == arrivee:
             return "vous êtes déjà sur place"
@@ -117,7 +143,8 @@ class Application(tk.Frame):
                 break
             for vois in noeud.voisins:
                     
-                    longueur = data.get_piste(noeud, vois).longueur
+                    longueur = data.get_piste(noeud, vois).longueur 
+                    print(longueur)
                     
                     if noeud.distance + longueur < vois.distance:
                         vois.distance = noeud.distance + longueur
@@ -138,6 +165,14 @@ class Application(tk.Frame):
         self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
         for noeud in file:
             self.noeuds.append(noeud)
+        self.chemins = []
+
+    def reset(self):
+        for noeud in self.noeuds:
+            self.canvas.itemconfig(noeud.point, fill="orange", outline="black", width=1)
+        for piste in self.pistes:
+            for trait in piste.segment:
+                self.canvas.itemconfig(trait, fill=piste.couleur, width=5)
         self.chemins = []
         
 
@@ -162,11 +197,12 @@ class Noeuds ():
 
 class Pistes():
     def __init__(self,nom, couleur, noeud_d, noeud_f, longueur, coords, segment = None) -> None:
+        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 1}
         self.nom = nom
         self.couleur = couleur
         self.depart = noeud_d
         self.fin = noeud_f
-        self.longueur = longueur
+        self.longueur = longueur / vitesse[couleur]
         self.coords = coords
         self.segment = segment
     def __repr__(self) -> str:
@@ -191,11 +227,12 @@ class Data():
 
 
     def get_piste(self, a, b):
-
+        pistes = []
         for piste in self.pistes:
             if piste.depart == a and piste.fin == b:
-                return piste
-        return None
+                pistes.append(piste)
+        pistes.sort(key = lambda x: x.longueur)
+        return pistes[0]
     
     def voisin(self, noeud):
         for piste in self.pistes:
