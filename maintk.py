@@ -43,9 +43,11 @@ class Application(tk.Frame):
 
         # Ajouter les pistes sur le canvas
         for piste in liste_pistes:
-            x1, y1 = data.get_noeud(piste.depart.nom).coord
-            x2, y2 = data.get_noeud(piste.fin.nom).coord
-            piste_obj = self.canvas.create_line(x1, y1, x2, y2, fill=piste.couleur, width=5, tags="piste")
+            piste_obj = []
+            for i in range(len(piste.coords)-1):
+                xi, yi = piste.coords[i]
+                xi1, yi1 = piste.coords[i+1]
+                piste_obj.append(self.canvas.create_line(xi, yi, xi1, yi1, fill=piste.couleur, width=5, tags= piste.nom))
             self.pistes.append((piste.nom, piste_obj))
             piste.segment = piste_obj
 
@@ -129,8 +131,8 @@ class Application(tk.Frame):
             
             self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
             piste = data.get_piste(noeud.precedent, noeud)
-            
-            self.canvas.itemconfig(piste.segment, fill="yellow", width=4 )
+            for trait in piste.segment:
+                self.canvas.itemconfig(trait, fill="yellow", width=4 )
             print(piste.nom, piste.longueur)
             noeud = noeud.precedent
         self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
