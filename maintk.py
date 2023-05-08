@@ -108,7 +108,7 @@ class  Application(tk.Frame):
             if noeud is not None:
                 self.chemins.append(noeud)
             else:
-                showinfo("Attention", "Vous n'avez pas cliqué sur un noeud")
+                pass
         if len(self.chemins) % 2 == 0 and len(self.chemins) != 0:
             self.trajet()
 
