@@ -30,13 +30,13 @@ class  Application(tk.Frame):
         menu_bar = tk.Menu(self.root)
         self.root.config(menu=menu_bar)
         file_menu = tk.Menu(menu_bar, tearoff=0)
-        file_menu.add_command(label="débutant", command= self.debutant)
-        file_menu.add_command(label="confirmer", command= self.confimer)
+        file_menu.add_command(label="Débutant", command=self.debutant)
+        file_menu.add_command(label="Confirmé", command=self.confimer)
 
 
-        menu_bar.add_cascade(label="niveau", menu=file_menu)
+        menu_bar.add_cascade(label="Niveau", menu=file_menu)
         menu_bar.add_command(label="Exit", command=self.root.quit)
-        menu_bar.add_command(label="reset", command=self.reset)
+        menu_bar.add_command(label="Reset", command=self.reset)
 
         # Configurer le système de grille
         self.root.columnconfigure(0, weight=1)
@@ -148,7 +148,6 @@ class  Application(tk.Frame):
             for vois in noeud.voisins:
 
                 longueur = data.get_piste(noeud, vois).longueur
-                print(longueur)
 
                 if noeud.distance + longueur < vois.distance:
                     vois.distance = noeud.distance + longueur
@@ -177,6 +176,8 @@ class  Application(tk.Frame):
             for trait in piste.segment:
                 self.canvas.itemconfig(trait, fill=piste.couleur, width=5)
         self.chemins = []
+
+
 
 
 
@@ -257,7 +258,7 @@ for elem in fichier["pistes"]:
                                elem["noeud_fin"], elem["longueur"], coords = elem["coords"]))
 
 data = Data(liste_noeuds, liste_pistes)
-
 root = tk.Tk()
+
 app = Application(master=root)
 app.mainloop()
