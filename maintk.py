@@ -10,13 +10,14 @@ class  Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.niveau = "débutant"
+        screen_width = root.winfo_screenwidth()*0.9
+        screen_height = root.winfo_screenheight()*0.8
         self.root = root
-        self.root.geometry(f"{1500}x{1080}")
         self.root.title("Createur de graph")
-        self.image_path = "data\plan-pistes.jpg"
+        self.image_path = "data/plan-pistes.jpg"
         self.image = Image.open(self.image_path)
         self.photo = ImageTk.PhotoImage(self.image)
-        self.canvas = tk.Canvas(self.root, width=1400, height=1000, bg="black",
+        self.canvas = tk.Canvas(self.root, width=screen_width, height=screen_height, bg="black",
                                 scrollregion=(0, 0, self.image.width, self.image.height))
         self.canvas.grid(row=1, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo)
@@ -192,7 +193,7 @@ class  Application(tk.Frame):
 
 
 
-fichier = json.load(open("data\data.json","r"))
+fichier = json.load(open("data/data.json","r"))
 
 
 class Noeuds ():
