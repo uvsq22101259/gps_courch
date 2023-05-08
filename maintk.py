@@ -11,7 +11,7 @@ class  Application(tk.Frame):
         super().__init__(master)
         self.niveau = "débutant"
         screen_width = root.winfo_screenwidth()*0.9
-        screen_height = root.winfo_screenheight()*0.8
+        screen_height = root.winfo_screenheight()*0.78
         self.root = root
         self.root.title("Createur de graph")
         self.image_path = "data/plan-pistes.jpg"
