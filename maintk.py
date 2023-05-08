@@ -13,7 +13,7 @@ class  Application(tk.Frame):
         screen_width = root.winfo_screenwidth()*0.9
         screen_height = root.winfo_screenheight()*0.78
         self.root = root
-        self.root.title("Createur de graph")
+        self.root.title("GPS Courchevel")
         self.image_path = "data/plan-pistes.jpg"
         self.image = Image.open(self.image_path)
         self.photo = ImageTk.PhotoImage(self.image)
@@ -25,6 +25,8 @@ class  Application(tk.Frame):
         self.result = tk.Label(self.root, text="", bg="white", fg="black", font=("Helvetica", 16))
         self.result.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
 
+        tk.Button(self.root, text="Reset", command=self.reset).grid(row=0, column=1, sticky=tk.E+tk.W)
+
         self.x_scrollbar = tk.Scrollbar(self.root, orient=tk.HORIZONTAL,
                                         command=self.canvas.xview, width= 40)
         self.x_scrollbar.grid(row=2, column=0, sticky=tk.E+tk.W)
@@ -32,16 +34,15 @@ class  Application(tk.Frame):
                                         command=self.canvas.yview, width= 40)
         self.y_scrollbar.grid(row=1, column=1, sticky=tk.N+tk.S)
         self.canvas.config(xscrollcommand=self.x_scrollbar.set, yscrollcommand=self.y_scrollbar.set)
-        menu_bar = tk.Menu(self.root)
-        self.root.config(menu=menu_bar)
-        file_menu = tk.Menu(menu_bar, tearoff=0)
-        file_menu.add_command(label="Débutant", command=self.debutant)
-        file_menu.add_command(label="Confirmé", command=self.confimer)
+        bar = tk.Menu(self.root)
+        self.root.config(menu=bar)
+        menu = tk.Menu(bar, tearoff=0)
+        menu.add_command(label="Débutant", command=self.debutant)
+        menu.add_command(label="Confirmé", command=self.confimer)
 
 
-        menu_bar.add_cascade(label="Niveau", menu=file_menu)
-        menu_bar.add_command(label="Exit", command=self.root.quit)
-        menu_bar.add_command(label="Reset", command=self.reset)
+        bar.add_cascade(label="Niveau", menu=menu)
+        bar.add_command(label="Exit", command=self.root.quit)
 
         # Configurer le système de grille
         self.root.columnconfigure(0, weight=1)
@@ -127,7 +128,7 @@ class  Application(tk.Frame):
 
         # Initialisation
         if depart == arrivee:
-            showinfo("attention", "vous êtes déjà sur place")
+            showinfo("attention", "Vous êtes déjà sur place")
             self.reset()
             return
 
@@ -164,7 +165,7 @@ class  Application(tk.Frame):
         # Affichage du chemin
         noeud = arrivee
         if noeud.precedent is None:
-            showinfo("attention", "vous ne pouvez pas atteindre cette destination")
+            showinfo("attention", "Vous ne pouvez pas atteindre cette destination")
             self.reset()
             return
 
@@ -177,7 +178,7 @@ class  Application(tk.Frame):
         self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
         
         self.chemins = []
-        self.result.config(text="durée du trajet: " + str(round(arrivee.distance,2)) + " min")
+        self.result.config(text="Durée du trajet: " + str(round(arrivee.distance,2)) + " min")
         self.result.grid(row=0, column=0, sticky="nsew")
 
     def reset(self):
