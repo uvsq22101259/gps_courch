@@ -157,6 +157,9 @@ class  Application(tk.Frame):
                 if noeud.distance + longueur < vois.distance:
                     vois.distance = noeud.distance + longueur
                     vois.precedent = noeud
+        # reinitialisation des noeuds
+        for noeud in file:
+            self.noeuds.append(noeud)
 
         # Affichage du chemin
         noeud = arrivee
@@ -172,8 +175,7 @@ class  Application(tk.Frame):
                 self.canvas.itemconfig(trait, fill="yellow", width=4 )
             noeud = noeud.precedent
         self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
-        for noeud in file:
-            self.noeuds.append(noeud)
+        
         self.chemins = []
         self.result.config(text="durée du trajet: " + str(round(arrivee.distance,2)) + " min")
         self.result.grid(row=0, column=0, sticky="nsew")
