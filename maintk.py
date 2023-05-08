@@ -108,7 +108,7 @@ class  Application(tk.Frame):
             if noeud is not None:
                 self.chemins.append(noeud)
             else:
-                print("Aucun noeud trouvé")
+                showinfo("attention", "vous n'avez pas cliqué sur un noeud")
         if len(self.chemins) % 2 == 0 and len(self.chemins) != 0:
             self.trajet()
 
@@ -149,7 +149,6 @@ class  Application(tk.Frame):
             noeud = self.noeuds.pop(0)
             file.append(noeud)
             if noeud == arrivee:
-                print("Arrivée", noeud.precedent)
                 break
             for vois in noeud.voisins:
 
@@ -171,7 +170,6 @@ class  Application(tk.Frame):
             piste = data.get_piste(noeud.precedent, noeud)
             for trait in piste.segment:
                 self.canvas.itemconfig(trait, fill="yellow", width=4 )
-            print(piste.nom, piste.longueur)
             noeud = noeud.precedent
         self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
         for noeud in file:
