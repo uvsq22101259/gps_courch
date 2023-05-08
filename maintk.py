@@ -11,19 +11,18 @@ class  Application(tk.Frame):
         super().__init__(master)
         self.niveau = "débutant"
         self.root = root
-        screen_width = int(self.root.winfo_screenwidth()*0.9)
-        screen_height = int(self.root.winfo_screenheight()*0.8)
-        self.root.geometry(f"{screen_width}x{screen_height}")
+        self.root.geometry(f"{1500}x{1080}")
         self.root.title("Createur de graph")
         self.image_path = "data\plan-pistes.jpg"
         self.image = Image.open(self.image_path)
         self.photo = ImageTk.PhotoImage(self.image)
-        self.canvas = tk.Canvas(self.root, width=1400, height=1080, bg="black",
+        self.canvas = tk.Canvas(self.root, width=1400, height=1000, bg="black",
                                 scrollregion=(0, 0, self.image.width, self.image.height))
         self.canvas.grid(row=1, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo)
 
         self.result = tk.Label(self.root, text="", bg="white", fg="black", font=("Helvetica", 16))
+        self.result.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
 
         self.x_scrollbar = tk.Scrollbar(self.root, orient=tk.HORIZONTAL,
                                         command=self.canvas.xview, width= 40)
