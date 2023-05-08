@@ -1,5 +1,6 @@
 import tkinter as tk
 import json
+from tkinter.messagebox import showinfo
 from PIL import ImageTk, Image
 
 
@@ -10,22 +11,26 @@ class  Application(tk.Frame):
         super().__init__(master)
         self.niveau = "débutant"
         self.root = root
-        self.root.geometry("1500x1080")
+        screen_width = int(self.root.winfo_screenwidth()*0.9)
+        screen_height = int(self.root.winfo_screenheight()*0.8)
+        self.root.geometry(f"{screen_width}x{screen_height}")
         self.root.title("Createur de graph")
         self.image_path = "data\plan-pistes.jpg"
         self.image = Image.open(self.image_path)
         self.photo = ImageTk.PhotoImage(self.image)
         self.canvas = tk.Canvas(self.root, width=1400, height=1080, bg="black",
                                 scrollregion=(0, 0, self.image.width, self.image.height))
-        self.canvas.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
+        self.canvas.grid(row=1, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo)
+
+        self.result = tk.Label(self.root, text="", bg="white", fg="black", font=("Helvetica", 16))
 
         self.x_scrollbar = tk.Scrollbar(self.root, orient=tk.HORIZONTAL,
                                         command=self.canvas.xview, width= 40)
-        self.x_scrollbar.grid(row=1, column=0, sticky=tk.E+tk.W)
+        self.x_scrollbar.grid(row=2, column=0, sticky=tk.E+tk.W)
         self.y_scrollbar = tk.Scrollbar(self.root, orient=tk.VERTICAL,
                                         command=self.canvas.yview, width= 40)
-        self.y_scrollbar.grid(row=0, column=1, sticky=tk.N+tk.S)
+        self.y_scrollbar.grid(row=1, column=1, sticky=tk.N+tk.S)
         self.canvas.config(xscrollcommand=self.x_scrollbar.set, yscrollcommand=self.y_scrollbar.set)
         menu_bar = tk.Menu(self.root)
         self.root.config(menu=menu_bar)
@@ -73,17 +78,16 @@ class  Application(tk.Frame):
     def confimer(self):
         """ change le niveau de difficulté des pistes et des noeuds"""
         data.niveau = "confirmé"
-        vitesse = {"green": 55, "blue": 60, "red": 100, "black": 130, "grey" : 1}
+        vitesse = {"green": 55, "blue": 60, "red": 80, "black": 150, "grey" : 40}
         for piste in self.pistes:
-            piste.longueur /= vitesse[piste.couleur]
+            piste.dure = round(piste.longueur / vitesse[piste.couleur],2)
 
     def debutant(self):
         """ change le niveau de difficulté des pistes et des noeuds"""
         data.niveau = "débutant"
-        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 1}
+        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 40}
         for piste in self.pistes:
-            piste.longueur /= vitesse[piste.couleur]
-
+            piste.dure = round(piste.longueur / vitesse[piste.couleur],2)
 
     def find_noeud(self, x, y):
         """ retourne le noeud sur lequel on a cliqué, ou None si on n'a pas cliqué sur un noeud"""
@@ -123,14 +127,16 @@ class  Application(tk.Frame):
 
         # Initialisation
         if depart == arrivee:
-            return "vous êtes déjà sur place"
+            showinfo("attention", "vous êtes déjà sur place")
+            self.reset()
+            return
 
         for noeud in self.noeuds:
             noeud.distance = float("inf")
             noeud.precedent = None
 
         for vois in depart.voisins:
-            longueur = data.get_piste(depart, vois).longueur
+            longueur = data.get_piste(depart, vois).dure
             vois.distance = longueur
             vois.precedent = depart
 
@@ -147,7 +153,7 @@ class  Application(tk.Frame):
                 break
             for vois in noeud.voisins:
 
-                longueur = data.get_piste(noeud, vois).longueur
+                longueur = data.get_piste(noeud, vois).dure
 
                 if noeud.distance + longueur < vois.distance:
                     vois.distance = noeud.distance + longueur
@@ -155,6 +161,10 @@ class  Application(tk.Frame):
 
         # Affichage du chemin
         noeud = arrivee
+        if noeud.precedent is None:
+            showinfo("attention", "vous ne pouvez pas atteindre cette destination")
+            self.reset()
+            return
 
         while noeud.precedent is not None:
             self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
@@ -167,6 +177,8 @@ class  Application(tk.Frame):
         for noeud in file:
             self.noeuds.append(noeud)
         self.chemins = []
+        self.result.config(text="durée du trajet: " + str(round(arrivee.distance,2)) + " min")
+        self.result.grid(row=0, column=0, sticky="nsew")
 
     def reset(self):
         """Remet le canvas à son état initial"""
@@ -198,12 +210,13 @@ class Noeuds ():
 class Pistes():
     """Classe qui représente une piste de ski"""
     def __init__(self,nom, couleur, noeud_d, noeud_f, longueur, coords, segment = None) -> None:
-        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 1}
+        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 40}
         self.nom = nom
         self.couleur = couleur
         self.depart = noeud_d
         self.fin = noeud_f
-        self.longueur = longueur / vitesse[couleur]
+        self.longueur = longueur
+        self.dure = round(longueur / vitesse[couleur], 2)
         self.coords = coords
         self.segment = segment
     def __repr__(self) -> str:
@@ -213,8 +226,8 @@ class Pistes():
 class Data():
     """Classe qui représente l'ensemble des données du graphe"""
     def __init__(self, noeuds, pistes) -> None:
-        self.noeuds = noeuds
-        self.pistes = pistes
+        self.noeuds = list(noeuds)
+        self.pistes = list(pistes)
         self.niveau = "débutant"
         for piste in self.pistes:
             piste.depart = self.get_noeud(piste.depart)

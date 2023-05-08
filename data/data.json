@@ -8849,12 +8849,63 @@
           1679.0
         ]
       ]
+    },
+    {
+      "name": "p321",
+      "couleur": "green",
+      "noeud_depart": "n103",
+      "noeud_fin": "n104",
+      "longueur": 39,
+      "coords": [
+        [
+          1552.0,
+          1573.0
+        ],
+        [
+          1521.0,
+          1597.0
+        ]
+      ]
+    },
+    {
+      "name": "p322",
+      "couleur": "green",
+      "noeud_depart": "n134",
+      "noeud_fin": "bas JARDIN ALPIN",
+      "longueur": 72,
+      "coords": [
+        [
+          1752.0,
+          1818.0
+        ],
+        [
+          1823.0,
+          1834.0
+        ]
+      ]
+    },
+    {
+      "name": "p323",
+      "couleur": "blue",
+      "noeud_depart": "n150",
+      "noeud_fin": "n162",
+      "longueur": 31,
+      "coords": [
+        [
+          2628.0,
+          1649.0
+        ],
+        [
+          2617.0,
+          1679.0
+        ]
+      ]
     }
   ],
   "details": {
     "canvas_width": 3601,
     "canvas_height": 3000,
     "nombre_noeuds": 172,
-    "nombre_pistes": 320
+    "nombre_pistes": 323
   }
 }
