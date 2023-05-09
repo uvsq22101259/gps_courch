@@ -78,16 +78,16 @@ class  Application(tk.Frame):
     def confimer(self):
         """ change le niveau de difficulté des pistes et des noeuds"""
         data.niveau = "confirmé"
-        vitesse = {"green": 55, "blue": 60, "red": 80, "black": 150, "grey" : 40}
+        vitesse = {"green": 55, "blue": 60, "red": 80, "black": 150, "grey" : 80}
         for piste in self.pistes:
-            piste.dure = round(piste.longueur / vitesse[piste.couleur],2)
+            piste.dure = round(piste.longueur / (vitesse[piste.couleur]/piste.cat),2)
 
     def debutant(self):
         """ change le niveau de difficulté des pistes et des noeuds"""
         data.niveau = "débutant"
-        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 40}
+        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 80}
         for piste in self.pistes:
-            piste.dure = round(piste.longueur / vitesse[piste.couleur],2)
+            piste.dure = round(piste.longueur / (vitesse[piste.couleur]/piste.cat),2)
 
     def find_noeud(self, x, y):
         """ retourne le noeud sur lequel on a cliqué, ou None si on n'a pas cliqué sur un noeud"""
@@ -212,14 +212,15 @@ class Noeuds ():
 
 class Pistes():
     """Classe qui représente une piste de ski"""
-    def __init__(self,nom, couleur, noeud_d, noeud_f, longueur, coords, segment = None) -> None:
-        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 40}
+    def __init__(self,nom, couleur, noeud_d, noeud_f, longueur, coords,cat, segment = None ) -> None:
+        vitesse = {"green": 50, "blue": 45, "red": 40, "black": 35 , "grey" : 80}
         self.nom = nom
         self.couleur = couleur
+        self.cat = int(cat)
         self.depart = noeud_d
         self.fin = noeud_f
         self.longueur = longueur
-        self.dure = round(longueur / vitesse[couleur], 2)
+        self.dure = round(longueur / (vitesse[self.couleur]/self.cat), 2)
         self.coords = coords
         self.segment = segment
     def __repr__(self) -> str:
@@ -271,7 +272,7 @@ for elem in fichier["noeuds"]:
 liste_pistes = []
 for elem in fichier["pistes"]:
     liste_pistes.append(Pistes(elem["name"], elem["couleur"], elem["noeud_depart"],
-                               elem["noeud_fin"], elem["longueur"], coords = elem["coords"]))
+                               elem["noeud_fin"], elem["longueur"], coords = elem["coords"], cat = elem["remonte"]))
 
 data = Data(liste_noeuds, liste_pistes)
 root = tk.Tk()
