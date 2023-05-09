@@ -21,9 +21,8 @@ class  Application(tk.Frame):
                                 scrollregion=(0, 0, self.image.width, self.image.height))
         self.canvas.grid(row=1, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.photo)
-
+        self.time_trajet = 0
         self.result = tk.Label(self.root, text="", bg="white", fg="black", font=("Helvetica", 16))
-        self.result.grid(row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
 
         tk.Button(self.root, text="Reset", command=self.reset).grid(row=0, column=1, sticky=tk.E+tk.W)
 
@@ -179,7 +178,8 @@ class  Application(tk.Frame):
         self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
         
         self.chemins = []
-        self.result.config(text="Durée du trajet: " + str(round(arrivee.distance,2)) + " min")
+        self.time_trajet += round(arrivee.distance,2)
+        self.result.config(text="Durée du trajet: " + str(self.time_trajet) + " min")
         self.result.grid(row=0, column=0, sticky="nsew")
 
     def reset(self):
@@ -190,6 +190,8 @@ class  Application(tk.Frame):
             for trait in piste.segment:
                 self.canvas.itemconfig(trait, fill=piste.couleur, width=5)
         self.chemins = []
+        self.time_trajet = 0
+        self.result.grid_forget()
 
 
 
