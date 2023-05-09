@@ -35,9 +35,10 @@ class  Application(tk.Frame):
         self.canvas.config(xscrollcommand=self.x_scrollbar.set, yscrollcommand=self.y_scrollbar.set)
         bar = tk.Menu(self.root)
         self.root.config(menu=bar)
+
         menu = tk.Menu(bar, tearoff=0)
         menu.add_command(label="Débutant", command=self.debutant)
-        menu.add_command(label="Confirmé", command=self.confimer)
+        menu.add_command(label="Confirmé", command=self.confimé)
 
 
         bar.add_cascade(label="Niveau", menu=menu)
@@ -75,7 +76,7 @@ class  Application(tk.Frame):
 
 
 
-    def confimer(self):
+    def confimé(self):
         """ change le niveau de difficulté des pistes et des noeuds"""
         data.niveau = "confirmé"
         vitesse = {"green": 55, "blue": 60, "red": 80, "black": 150, "grey" : 80}
