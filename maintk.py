@@ -44,9 +44,6 @@ class  Application(tk.Frame):
         bar.add_cascade(label="Niveau", menu=menu)
         bar.add_command(label="Exit", command=self.root.quit)
 
-        # Configurer le système de grille
-        self.root.columnconfigure(0, weight=1)
-        self.root.rowconfigure(0, weight=1)
 
         self.noeuds = []
         self.pistes = []
@@ -125,12 +122,12 @@ class  Application(tk.Frame):
     def dijkstra(self, depart, arrivee):
         """Calcule le plus court chemin entre deux noeuds avec l'algorithme de Dijkstra"""
 
-
-        # Initialisation
         if depart == arrivee:
             showinfo("attention", "Vous êtes déjà sur place")
             self.reset()
             return
+
+        # Initialisation
 
         for noeud in self.noeuds:
             noeud.distance = float("inf")
