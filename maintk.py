@@ -10,8 +10,8 @@ class  Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.niveau = "débutant"
-        screen_width = root.winfo_screenwidth()*0.9
-        screen_height = root.winfo_screenheight()*0.78
+        screen_width = root.winfo_screenwidth()-60
+        screen_height = root.winfo_screenheight()-100
         self.root = root
         self.root.title("GPS Courchevel")
         self.image_path = "data/plan-pistes.jpg"
@@ -24,7 +24,7 @@ class  Application(tk.Frame):
         self.time_trajet = 0
         self.result = tk.Label(self.root, text="", bg="white", fg="black", font=("Helvetica", 16))
 
-        tk.Button(self.root, text="Reset", command=self.reset).grid(row=0, column=1, sticky=tk.E+tk.W)
+        tk.Button(self.root, text="Reset", command=self.reset).grid(row=0, column=1)
 
         self.x_scrollbar = tk.Scrollbar(self.root, orient=tk.HORIZONTAL,
                                         command=self.canvas.xview, width= 40)
@@ -44,6 +44,10 @@ class  Application(tk.Frame):
         tools.add_command(label="Exit", command=self.root.quit)
         tools.add_command(label="montrer les pistes", command=self.show_piste)
         bar.add_cascade(label="outils", menu=tools)
+
+
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
 
 
         self.noeuds = []
@@ -281,6 +285,7 @@ for elem in fichier["pistes"]:
 
 data = Data(liste_noeuds, liste_pistes)
 root = tk.Tk()
+root.attributes('-fullscreen', True)
 
 app = Application(master=root)
 app.mainloop()
