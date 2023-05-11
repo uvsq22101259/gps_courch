@@ -36,14 +36,14 @@ class  Application(tk.Frame):
         bar = tk.Menu(self.root)
         self.root.config(menu=bar)
 
-        menu = tk.Menu(bar, tearoff=0)
-        menu.add_command(label="Débutant", command=self.debutant)
-        menu.add_command(label="Confirmé", command=self.confimé)
-
-
-        bar.add_cascade(label="Niveau", menu=menu)
-        bar.add_command(label="Exit", command=self.root.quit)
-        bar.add_command(label="montrer les pistes", command=self.show_piste)
+        niveau = tk.Menu(bar, tearoff=0)
+        niveau.add_command(label="Débutant", command=self.debutant)
+        niveau.add_command(label="Confirmé", command=self.confimé)
+        bar.add_cascade(label="Niveau", menu=niveau)
+        tools = tk.Menu(bar, tearoff=1)
+        tools.add_command(label="Exit", command=self.root.quit)
+        tools.add_command(label="montrer les pistes", command=self.show_piste)
+        bar.add_cascade(label="outils", menu=tools)
 
 
         self.noeuds = []
