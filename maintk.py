@@ -43,6 +43,7 @@ class  Application(tk.Frame):
 
         bar.add_cascade(label="Niveau", menu=menu)
         bar.add_command(label="Exit", command=self.root.quit)
+        bar.add_command(label="montrer les pistes", command=self.show_piste)
 
 
         self.noeuds = []
@@ -189,6 +190,12 @@ class  Application(tk.Frame):
         self.chemins = []
         self.time_trajet = 0
         self.result.grid_forget()
+
+    def show_piste(self):
+        for piste in self.pistes:
+            for trait in piste.segment:
+                self.canvas.itemconfig(trait, fill=piste.couleur, width=5)
+        
 
 
 
