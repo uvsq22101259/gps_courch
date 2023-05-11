@@ -40,7 +40,7 @@ class  Application(tk.Frame):
         niveau.add_command(label="Débutant", command=self.debutant)
         niveau.add_command(label="Confirmé", command=self.confimé)
         bar.add_cascade(label="Niveau", menu=niveau)
-        tools = tk.Menu(bar, tearoff=1)
+        tools = tk.Menu(bar, tearoff=0)
         tools.add_command(label="Exit", command=self.root.quit)
         tools.add_command(label="montrer les pistes", command=self.show_piste)
         bar.add_cascade(label="outils", menu=tools)
