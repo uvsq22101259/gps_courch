@@ -42,8 +42,8 @@ class  Application(tk.Frame):
         bar.add_cascade(label="Niveau", menu=niveau)
         tools = tk.Menu(bar, tearoff=0)
         tools.add_command(label="Exit", command=self.root.quit)
-        tools.add_command(label="montrer les pistes", command=self.show_piste)
-        bar.add_cascade(label="outils", menu=tools)
+        tools.add_command(label="Montrer les pistes", command=self.show_piste)
+        bar.add_cascade(label="Outils", menu=tools)
 
 
         self.noeuds = []
