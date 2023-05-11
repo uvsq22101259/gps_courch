@@ -3,7 +3,7 @@ import json
 from tkinter.messagebox import showinfo
 from PIL import ImageTk, Image
 
-
+TRANSCOLOUR = ''
 
 class  Application(tk.Frame):
     """ Classe principale de l'application"""
@@ -64,7 +64,7 @@ class  Application(tk.Frame):
                 xi, yi = piste.coords[i]
                 xi1, yi1 = piste.coords[i+1]
                 piste_obj.append(self.canvas.create_line(xi, yi, xi1, yi1,
-                                                fill =piste.couleur, width=5, tags =piste.nom))
+                                                fill =TRANSCOLOUR, width=5, tags =piste.nom))
             self.pistes.append(piste)
             piste.segment = piste_obj
 
@@ -167,12 +167,12 @@ class  Application(tk.Frame):
             return
 
         while noeud.precedent is not None:
-            self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
+            self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=2)
             piste = data.get_piste(noeud.precedent, noeud)
             for trait in piste.segment:
-                self.canvas.itemconfig(trait, fill="yellow", width=4 )
+                self.canvas.itemconfig(trait, fill=piste.couleur, width=4 )
             noeud = noeud.precedent
-        self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=4)
+        self.canvas.itemconfig(noeud.point, fill="yellow", outline="yellow", width=2)
         
         self.chemins = []
         self.time_trajet += round(arrivee.distance,2)
@@ -185,7 +185,7 @@ class  Application(tk.Frame):
             self.canvas.itemconfig(noeud.point, fill="orange", outline="black", width=1)
         for piste in self.pistes:
             for trait in piste.segment:
-                self.canvas.itemconfig(trait, fill=piste.couleur, width=5)
+                self.canvas.itemconfig(trait, fill="", width=5)
         self.chemins = []
         self.time_trajet = 0
         self.result.grid_forget()
