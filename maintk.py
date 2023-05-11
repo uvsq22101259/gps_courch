@@ -185,7 +185,7 @@ class  Application(tk.Frame):
             self.canvas.itemconfig(noeud.point, fill="orange", outline="black", width=1)
         for piste in self.pistes:
             for trait in piste.segment:
-                self.canvas.itemconfig(trait, fill="", width=5)
+                self.canvas.itemconfig(trait, fill=TRANSCOLOUR, width=5)
         self.chemins = []
         self.time_trajet = 0
         self.result.grid_forget()
