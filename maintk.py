@@ -203,9 +203,6 @@ class  Application(tk.Frame):
         
 
 
-
-
-
 fichier = json.load(open("data/data.json","r"))
 
 
