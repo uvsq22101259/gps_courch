@@ -13,6 +13,7 @@ class  Application(tk.Frame):
         screen_width = root.winfo_screenwidth()-60
         screen_height = root.winfo_screenheight()-100
         self.root = root
+        self.root.attributes('-fullscreen', True)
         self.root.title("GPS Courchevel")
         self.image_path = "data/plan-pistes.jpg"
         self.image = Image.open(self.image_path)
@@ -285,7 +286,7 @@ for elem in fichier["pistes"]:
 
 data = Data(liste_noeuds, liste_pistes)
 root = tk.Tk()
-root.attributes('-fullscreen', True)
+
 
 app = Application(master=root)
 app.mainloop()
